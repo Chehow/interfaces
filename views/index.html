@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Designing the User Interface</title>
+        
+        <!-- The stylesheets -->
+        <link rel="stylesheet" href="assets/css/styles.css" />
+        <link rel="stylesheet" href="codebase/webix.css" />
+        
+        <!-- JavaScript includes -->
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="assets/js/jquery.js"></script>
+		<script src="assets/js/fabric.min.js"></script>
+		<script src="codebase/webix.js"></script>
+		
+		<script src="assets/js/interface/main.js"></script>
+		<script src="assets/js/interface/history.js"></script>
+		<script src="assets/js/interface/tree.js"></script>
+		<script src="assets/js/interface/tree.js"></script>
+		<script src="assets/js/interface/configs.js"></script>
+		<script src="assets/js/script.js"></script>
+		<script src="assets/js/date.format.js"></script>
+		<script src="assets/js/moment.min.js"></script>
+		<script src="assets/js/objects/canvas_object.js"></script>      
+		<script src="assets/js/objects/text.js"></script>
+		<script src="assets/js/objects/main_canvas.js"></script>
+		<script src="assets/js/objects/path.js"></script>
+		<script src="assets/js/objects/svg.js"></script>
+		<script src="assets/js/objects/image.js"></script>
+		<script src="assets/js/objects/circle.js"></script>
+		<script src="assets/js/objects/rect.js"></script>
+		<script src="assets/js/objects/triangle.js"></script>
+		<script src="assets/js/objects/ellipse.js"></script>
+		<script src="assets/js/objects/line.js"></script>
+		<script src="assets/js/interface/chat.js"></script>
+		<script src="assets/js/interface/connector.js"></script>
+
+        <!--[if lt IE 9]>
+          <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+    </head>
+    
+    <body id="main_container">
+		<div id="cursors"></div>
+
+		<div style="display:none; width:400px; height: 200px;" id="tpl">
+			Mode:
+		<select id="drawing-mode-selector">
+		  <option>Pencil</option>
+		  <option>Circle</option>
+		  <option>Spray</option>
+		  <option>Pattern</option>
+		  <option>hline</option>
+		  <option>vline</option>
+		  <option>square</option>
+		  <option>diamond</option>
+		  <option>texture</option>
+		</select><br>
+			Line width:
+		<input type="range" value="30" min="0" max="150" id="drawing-line-width"><br>
+			Line color:
+		<input type="color" value="#005E7A" id="drawing-color"><br>
+			Line shadow width:
+		<input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
+		</div>
+
+		<div id="left_toolbar"></div>
+		
+		<div id="footer">
+			<div class="footer_coords">x: <span id="x_coord"></span> y:<span id="y_coord"></span></div>
+		</div>
+								
+		<div id="draw_area">
+			<canvas id="paper" width="1900" height="1000">
+				Your browser needs to support canvas for this to work!
+			</canvas>
+		</div>
+		
+		<div id="image_svg" class="hidden">
+			<object data="assets/svg/19.svg" width="130px" height="130px" type="image/svg+xml"></object>
+		</div>
+		
+		
+		<div id="text_window"></div>
+		<div id="history_window"></div>
+		<div id="image_pic" class="hidden"><img /></div>
+		<div id="autors_info" class="hidden autors_info">
+			<div class="autors_info">
+				<div class='info_logo'><img src="assets/img/XBS.JPG" /></div>
+				<span class="info_text">Developed by: Artem Chehowsky from XB Software ltd.<span>
+			</div>
+		</div>
+		
+		<div id="uploader_container"></div> 
+    </body>
+</html>
