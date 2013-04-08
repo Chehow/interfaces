@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -117,7 +116,7 @@ app.get('/', loadUser, function(req, res){
 	res.render('room.html', {
 		locals: {
 		    title: 'User Room',
-		    user: user,
+		    user: user
 		}
 	});
 });
@@ -219,7 +218,7 @@ app.get('/login', function(req, res){
 app.post('/reg', function(req, res, next){
 	var user = new User(req.body.user);
 	user.save(function(e){
-    	res.redirect('/room/'+user._id);
+    	res.redirect('/room');
   	});	
 });
 
