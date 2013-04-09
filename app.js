@@ -117,7 +117,7 @@ app.get('/', loadUser, function(req, res){
 	res.render('room.html', {
 		locals: {
 		    title: 'User Room',
-		    user: user,
+		    user: user
 		}
 	});
 });
