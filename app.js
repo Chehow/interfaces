@@ -1,3 +1,4 @@
+
 /**
  * Module dependencies.
  */
@@ -62,7 +63,7 @@ app.configure(function(){
 	secret: 'some-We1rD sEEEEEcret!'}));
 	app.use(express.methodOverride());
 	app.use(app.router);
-	app.use(express.favicon(__dirname + '/public/images/favicon.ico'));
+	app.use(express.favicon(__dirname + '/images/favicon.ico'));
 	app.use(express.cookieParser());
 	app.use(express.static(path.join(__dirname, 'public')));
 	app.engine('html', require('ejs').renderFile);
@@ -116,7 +117,7 @@ app.get('/', loadUser, function(req, res){
 	res.render('room.html', {
 		locals: {
 		    title: 'User Room',
-		    user: user
+		    user: user,
 		}
 	});
 });
@@ -139,25 +140,27 @@ app.get('/room', loadUser, function(req, res){
 	});
 });
 
-app.post('/projects/add', loadUser, function(req, res){
+app.get('/room', loadUser, function(req, res){
 	var user = req.currentUser;
-	
-	var project = new Project({
-		    title: "New project",
-		    users: user.username,
-		    lastmod: "Not Modified",
-		    creator: user._id,
-		    owner: user.username,
-		    ch: 1,
-		    serialize: {}
+	res.render('room.html', {
+		locals: {
+		    title: 'User Room'
+		}
 	});
-	
-	project.id = project._id;
-	user.projs.push(project.id);
-	user.save();
-	project.save(function(e){
-    	res.send(project);
-  	});		
+});
+
+app.get('/project/getusers/:id', function(req, res){
+	var proj = req.params.id;
+	User.find({ projs: proj}, function (err, users) {
+		res.send(users);
+	});
+});
+
+app.get('/getusers', function(req, res){
+	var proj = req.params.id;
+	User.find({}, function (err, users) {
+		res.send(users);
+	});
 });
 
 app.post('/projects/delete', loadUser, function(req, res){
@@ -218,7 +221,7 @@ app.get('/login', function(req, res){
 app.post('/reg', function(req, res, next){
 	var user = new User(req.body.user);
 	user.save(function(e){
-    	res.redirect('/room');
+    	res.redirect('/room/'+user._id);
   	});	
 });
 

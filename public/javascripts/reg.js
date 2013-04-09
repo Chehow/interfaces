@@ -25,12 +25,13 @@ $(function(){
 						{ id:"female", value:"Female"},
 					]},
 					{ 
-						view:"combo", width:300,
+						view:"combo",
+						width:300,
 						label: 'Country:',  name:"country", id:"country",
 						value:1, yCount:"3", options:[ 
-							{ id:1, value:"Belarus"},
-							{ id:2, value:"Russia"}, 
-							{ id:3, value:"USA"}
+							{ id:"Belarus", value:"Belarus"},
+							{ id:"Belarus", value:"Russia"}, 
+							{ id:"Belarus", value:"USA"}
 						]
 					},
 					

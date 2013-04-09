@@ -16,8 +16,5 @@ $(function(){
 	chat = new Chat();
 	history = new History();
   	main_window = new MainWindow();
-  	canvas = new MainCanvas({});
-  	
-
-  	
+  	canvas = new MainCanvas({});	
 });

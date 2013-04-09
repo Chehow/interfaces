@@ -1,5 +1,8 @@
 
 var user;
+if (!webix.env.touch && webix.ui.scrollSize){
+	webix.CustomScroll.init(); 
+}
 $.post("/user/", {}, function(req){
 	user  = req.user;
 	$(function(){
@@ -31,71 +34,72 @@ $.post("/user/", {}, function(req){
 							}
 						]					
 					},
-					{cols:[
-						{
-							width:220,
-							height:'100%',
-							padding:10,
-							
-							margin:10,
-							rows:[
-								{
-									view:"button",
-									id:"create",
-									value:"Create",
-									type:"danger",
-									click: function(){
-										createNewProject();
-									}
-								},
-								{
-					                view:"menu",
-									layout:"y",
-									subMenuPos:"right",
-									data:[
-										{ value:"My Files"},
-										{ value:"Shared with me"},
-										{ value:"Starres"},
-										{ value:"Recent"},
-										{ $template:"Separator" },
-										{ value:"Info" }
-									],
-									on:{
-										onItemClick:function(id){
-											var menu = this.getSubMenu(id);
-											webix.message("Click: "+menu.item(id).value);
+					{
+						cols:[
+							{
+								width:220,
+								height:'100%',
+								padding:10,
+								
+								margin:10,
+								rows:[
+									{
+										view:"button",
+										id:"create",
+										value:"Create",
+										type:"danger",
+										click: function(){
+											createNewProject();
 										}
-									}								
-								}
-							]
-						},
-						{
-							view:"resizer",
-							id:"resizer"
-						},
-						{	
-							columns:[
-								{ id:"ch", header:[{text:"Title", colspan:2}] , template:"{common.checkbox()}", width:40, css:"static_table_cols"},
-								{ id:"title", fillspace:true, minWidth: 200, sort:"string", template:"#title#", editor:"text", css:"static_table_cols"},							
-								{ id:"owner", header:"Owner", width:200, sort:"string"},
-								{ id:"lastmod",	header:"Last Modified", width:200, sort:"date"},
-								{ id:"users", header:"Users", width:400},
-							],
-							minWidth: 1000,
-							scroll:"xy",
-							leftSplit:2,
-							editaction:"dblclick",
-							editable:true,
-							id:"projects",
-							select:true,
-							//data: data,
-							checkboxRefresh:false,
-							url:"projects/",
-							view:"datatable",
-							scroll:false
-							//autowidth:true,
-						}
-					]
+									},
+									{
+						                view:"menu",
+										layout:"y",
+										subMenuPos:"right",
+										data:[
+											{ value:"My Files"},
+											{ value:"Shared with me"},
+											{ value:"Starres"},
+											{ value:"Recent"},
+											{ $template:"Separator" },
+											{ value:"Info" }
+										],
+										on:{
+											onItemClick:function(id){
+												var menu = this.getSubMenu(id);
+												webix.message("Click: "+menu.item(id).value);
+											}
+										}								
+									}
+								]
+							},
+							{
+								view:"resizer",
+								id:"resizer"
+							},
+							{	
+								columns:[
+									{ id:"ch", header:[{text:"Title", colspan:2}] , template:"{common.checkbox()}", width:40, css:"static_table_cols"},
+									{ id:"title", fillspace:true, minWidth: 200, sort:"string", template:"#title#", editor:"text", css:"static_table_cols"},							
+									{ id:"owner", header:"Owner", width:200, sort:"string"},
+									{ id:"lastmod",	header:"Last Modified", width:200, sort:"date"},
+									{ id:"users", header:"Users", width:400},
+								],
+								minWidth: 1000,
+								scroll:"xy",
+								leftSplit:2,
+								editaction:"dblclick",
+								editable:true,
+								id:"projects",
+								select:true,
+								//data: data,
+								checkboxRefresh:false,
+								url:"projects/",
+								view:"datatable",
+								scroll:false
+								//autowidth:true,
+							}
+						]
 					}
 				]
 			}).show();
@@ -108,6 +112,8 @@ $.post("/user/", {}, function(req){
 	            id:"edit_users",
 	            head:"Users editing",
 	            position:"center",
+	            width:800,
+		        height:600,
 	            body:{
 	                rows:[
 	                {
@@ -118,68 +124,62 @@ $.post("/user/", {}, function(req){
 	                },
                     {
                     cells:[
-                    {
-                        width:800,
-                        height:600,
-                        view:"datatable",
-                        id:'show',
-                        scroll:0,
-                        columns:[             
-                            { id:"email",	header:"Email", width:370, sort:"string"},
-                            { id:"username",	header:"Nick", width:370, sort:"string"},
-                            { id:"delete",	header:"", 	width:40, template: function (obj) {
-                                if(obj['del'] === 'true') {return "<div><img src='images/delete.png'></div>";} else {return '';}}
-                            }
-                        ],
-                        select:"row",
-                        editable:false,
-                    }, 
-	                {
-	                    id:'add',
-	                    rows:[
-				            {
-				                height: 35,
-				                view:"toolbar",
-				                elements:[
-				                    {view:"text", id:"list_input",label:"Find User:",css:"fltr", labelWidth:100}
-				                ]
-				            },	                    	
-	                        {
-	                            width:1120,
-	                            view:"datatable",
-	                            id:"table_members",
-	                            scroll:0,
-	                            columns:[             
-	                                { id:"name",	header:"First Name", width:160, sort:"string"},
-	                                { id:"lastname",	header:"Last Name", width:160, sort:"string"},
-	                                { id:"country",	header:"Country", width:160, sort:"string"},
-	                                { id:"email",	header:"Email", width:160, sort:"string"},
-	                                { id:"photo",	header:"Photo", width:160, sort:"string"},
-	                                { id:"username",	header:"Nick", width:160, sort:"string"},
-	                                { id:"male",	header:"Male", width:160, sort:"string"}
-	                                /*           
-	                                { id:"delete",	header:"", 	width:36, template: function (obj) {
-	                                    if(obj['del'] === 'true') {return "<div><img src='images/delete.png'></div>";} else {return '';}}
-	                                }
-	                                */
-	                            ],
-	                            select:"row",
-	                            editable:false,
-	                           
-	                        },                        
-	                        {
-	                            view:"form",	
-	                            id:"buttons",
-	                            elements:[   
-	                                { cols:[                  
-	                                    { id: "but_save_project", view:"button", value:"Add Selected", type:"form"},                        
-	                                    { width:270}
-	                                ]}
-	                            ]
-	                        }
-	                    ]                    
-	                }                       
-                        ]
+		                    {
+		                        id:'show',
+		                        view:"datatable",
+		                        select:"row",
+		                        scrollX:false,
+		                        columns:[             
+		                            { id:"email",	header:"Email", width:370, sort:"string" , fillspace:true},
+		                            { id:"username",	header:"Nick", width:200, sort:"string"},
+		                            { id:"delete",	header:"", 	width:40, template: function (obj) {
+		                                if(obj['_id'] != user._id) {return "<div><img src='images/delete.png'></div>";} else {return '';}}
+		                            }
+		                        ],
+		                        editable:false,
+		                    }, 
+			                {
+			                    id:'add',
+			                    
+			                    rows:[
+							            {
+							                height: 35,
+							                view:"toolbar",
+							                elements:[
+							                    {view:"text", id:"list_input",label:"Find User:", labelWidth:100}
+							                ]
+							            },	                    	
+				                        {
+				                            view:"datatable",
+				                            id:"table_members",
+				                            multiselect:true,
+				                            rowHeight:100,
+				                            columns:[             
+				                                { id:"firstname",	header:"First Name", width:160, sort:"string"},
+				                                { id:"lastname",	header:"Last Name", width:160, sort:"string"},
+				                                { id:"country",	header:"Country", width:160, sort:"string"},
+				                                { id:"email",	header:"Email", width:160, sort:"string"},
+				                                { id:"photo",	header:"Photo", width:100, sort:"string", css:"noPadding", template:"<div class='grid_photo'><img src='#photo#'/></div>"},
+				                                { id:"username", header:"Nick", width:160, sort:"string"},
+				                                { id:"male",	header:"Male", width:160, sort:"string"}
+				                            ],
+				                            select:"row",
+				                            editable:false,				                           
+				                        },                        
+				                        {
+				                            view:"form",	
+				                            id:"buttons",
+				                            elements:[   
+				                                { cols:[                  
+				                                    { id: "add_users", view:"button", value:"Add Selected Users", type:"form"},                        
+				                                    { width:270}
+				                                ]}
+				                            ]
+				                        }
+			                    ]
+			                                        
+			                }                       
+                   		]
                     },               
 
 	                ]
@@ -189,6 +189,8 @@ $.post("/user/", {}, function(req){
 			$$("projects").attachEvent("onBeforeEditStart", function(id){
 				if(id.column=='users'){
 					$$('edit_users').show();
+					$$("show").load("project/getusers/"+id, "json");
+					$$("table_members").load("getusers/", "json");
 				}
 			});		
 						
@@ -198,13 +200,23 @@ $.post("/user/", {}, function(req){
 				name:"project_menu",
 				data:["Rename", "Open", "Delete", "Remove Checked","New"]
 			});
-			
-			$$("search").attachEvent("onTimedKeyPress",function(){
+
+			$$("table_members").attachEvent("onAfterFilter", function(){
+			    webix.message("Table was filtered");
+			})
+						
+			$$("list_input").attachEvent("onTimedKeyPress",function(){
+				
+				//$$('button1').define("label", "New value");
+				//$$('button1').refresh();
+
 				var value = this.getValue().toLowerCase(); 
-				$$("projects").filter(function(obj){ //here it filters data!
-					return obj.title.toLowerCase().indexOf(value)==0;
+				$$("table_members").filter(function(obj){
+					return (obj.firstname.toLowerCase().indexOf(value)==0) || (obj.lastname.toLowerCase().indexOf(value)==0) || (obj.username.toLowerCase().indexOf(value)==0) || (obj.email.toLowerCase().indexOf(value)==0);
 				})
 			});
+			
+
 			
 			project_menu.attachEvent("onBeforeShow", function(){
 				var context = this.getContext();

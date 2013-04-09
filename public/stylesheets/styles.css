@@ -385,3 +385,13 @@ footer a i b{
 .static_table_cols.webix_column>div:nth-child(odd){
 	background-color:#ffffee;
 }
+
+.noPadding .webix_cell{
+	padding: 0px;
+	line-height:100%;
+}
+
+.grid_photo img{
+	width:100px;
+	height:100px;
+}
